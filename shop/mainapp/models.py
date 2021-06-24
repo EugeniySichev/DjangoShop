@@ -66,14 +66,14 @@ class Customer(models.Model):
 
 
 
-# class Specifications(models.Model):
-#
-#     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-#     object_id = models.PositiveIntegerField()
-#     name = models.CharField(max_length=255, verbose_name='Имя товара для характеристики')
-#
-#     def __str__(self):
-#         return "Характеристики для товара: {}".format(self.name)
+class Specifications(models.Model):
+
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    name = models.CharField(max_length=255, verbose_name='Имя товара для характеристики')
+
+    def __str__(self):
+        return "Характеристики для товара: {}".format(self.name)
 
 
 
