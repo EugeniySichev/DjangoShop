@@ -23,8 +23,14 @@
 
         <p>Цена: {{ product.price }} руб.</p>
         <p>Описание: {{ product.description }}</p>
-        <p>Характеристика:</p>
+
     </div>
+     <p class="mt-4">Характеристика:</p>
+     {% if product.category.slug == 'notebooks' %}
+        {% include 'notebook_specification.html' %}
+     {% else %}
+        {% include 'smartphone_specification.html' %}
+    {% endif %}
 </div>
 
 
