@@ -58,16 +58,22 @@ class CategoryManager(models.Manager):
 
     CATEGORY_NAME_COUNT_NAME = {
         'Ноутбуки': 'notebook__count',
-        'Смартфоны': 'smartphone__count',
+        'Смартфоны': 'smartphone__count'
     }
 
     def get_queryset(self):
         return super().get_queryset()
 
-    def get_category_for_left_sidebar(self):
+    def get_categories_for_left_sidebar(self):
         models = get_models_for_count('notebook', 'smartphone')
-        qs = list(self.get_queryset().annotate(*models).values())
-        return [dict(name=c['name'], slug=c['slug'], count=c[self.CATEGORY_NAME_COUNT_NAME[c['name']]]) for c in qs]
+        qs = list(self.get_queryset().annotate(*models))
+        data = [
+            dict(name=c.name, url=c.get_absolute_url(), count=getattr(c, self.CATEGORY_NAME_COUNT_NAME[c.name]))
+            for c in qs
+        ]
+        return data
+
+
 
 
 
@@ -82,6 +88,9 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('category_detail', kwargs={'slug': self.slug})
 
 
 class Product(models.Model):
