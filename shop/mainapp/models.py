@@ -16,9 +16,10 @@ def get_models_for_count(*model_names):
     return [models.Count(model_name) for model_name in model_names]
 
 
-def get_product_url(obj, viewname, model_name):
-    ct_model = obj.__class__.meta.model_name
+def get_product_url(obj, viewname):
+    ct_model = obj.__class__._meta.model_name
     return reverse(viewname, kwargs={'ct_model': ct_model, 'slug': obj.slug})
+
 
 
 
